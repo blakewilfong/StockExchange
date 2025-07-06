@@ -1,16 +1,6 @@
 package price;
 import exceptions.InvalidPriceException;
 
-import java.util.Arrays;
-import java.util.Objects;
-
-/*
-Your PriceFactory class should define 2 public static methods called “makePrice” that create and return a new
-Price objects. One should accept an integer parameter, the other should accept a String parameter. These static
-functions should be called using the PriceFactory class, not a PriceFactory object:
-*/
-
-
 public abstract class PriceFactory {
 
     public static Price makePrice(int value) {
