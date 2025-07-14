@@ -46,29 +46,30 @@ public class Order implements Tradable{
 
     @Override
     public String getId() {
-        return "";
+        return this.id;
     }
 
     @Override
     public int getRemainingVolume() {
-        return 0;
+        return this.remainingVolume;
     }
 
     @Override
     public void setCancelledVolume(int newVol) {
-
+        this.cancelledVolume = newVol;
     }
 
     @Override
     public int getCancelledVolume() {
-        return 0;
+        return this.cancelledVolume;
     }
 
     @Override
     public void setRemainingVolume(int newVol) {
-
+        this.remainingVolume = newVol;
     }
 
+    //TODO
     @Override
     public TradableDTO makeTradableDTO() {
         return null;
@@ -76,36 +77,36 @@ public class Order implements Tradable{
 
     @Override
     public Price getPrice() {
-        return null;
+        return this.price;
     }
 
     @Override
     public void setFilledVolume(int newVol) {
-
+        this.filledVolume = newVol;
     }
 
     @Override
     public int getFilledVolume() {
-        return 0;
+        return this.filledVolume;
     }
 
     @Override
     public BookSide getSide() {
-        return null;
+        return this.side;
     }
 
     @Override
     public String getUser() {
-        return "";
+        return this.user;
     }
 
     @Override
     public String getProduct() {
-        return "";
+        return this.product;
     }
 
     @Override
     public int getOriginalVolume() {
-        return 0;
+        return this.originalVolume;
     }
 }
