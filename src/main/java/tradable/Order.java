@@ -88,5 +88,12 @@ public class Order implements Tradable {
     public int getOriginalVolume() {
         return this.tradable.getOriginalVolume();
     }
+
+    @Override
+    public String toString(){
+        return getUser() + getSide() + "order: " + getProduct() + "at " + getPrice() + ", Orig vol: " +
+                getOriginalVolume() + ", Rem Vol: " + getRemainingVolume() + ", Fill Vol: " + getFilledVolume() +
+                ", CXL Vol: " + getCancelledVolume() + ", ID: " + getId();
+    }
 }
 

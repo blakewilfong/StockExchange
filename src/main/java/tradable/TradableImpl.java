@@ -1,7 +1,6 @@
 package tradable;
 
 import book.BookSide;
-import exceptions.InvalidOrderException;
 import exceptions.InvalidTradableException;
 import price.Price;
 
@@ -125,6 +124,5 @@ public class TradableImpl implements Tradable{
         if (newVol <= 0 || newVol >= 10000)
             throw new InvalidTradableException("OriginalVolumeIn must be greater than 0 and less than 10,000");
         this.originalVolume = newVol;
-
     }
 }
