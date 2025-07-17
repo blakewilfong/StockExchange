@@ -1,6 +1,6 @@
 package exceptions;
 
-public class InvalidTradableException extends RuntimeException {
+public class InvalidTradableException extends Exception {
     public InvalidTradableException(String message) {
         super(message);
     }

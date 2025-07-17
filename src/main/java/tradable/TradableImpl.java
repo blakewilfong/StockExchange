@@ -1,11 +1,14 @@
 package tradable;
 
+import common.ProductUserValidator;
 import book.BookSide;
+import exceptions.InvalidInputException;
 import exceptions.InvalidTradableException;
 import price.Price;
 
 public class TradableImpl implements Tradable{
 
+    private final ProductUserValidator productUserValidator;
     private String user, product, id;
     private Price price;
     private int originalVolume, remainingVolume;
@@ -19,7 +22,8 @@ public class TradableImpl implements Tradable{
             Price priceIn,
             int originalVolumeIn,
             BookSide sideIn
-    ){
+    ) throws InvalidInputException, InvalidTradableException {
+        this.productUserValidator = new ProductUserValidator(userIn, productIn);
         setUser(userIn);
         setProduct(productIn);
         setPrice(priceIn);
@@ -58,10 +62,9 @@ public class TradableImpl implements Tradable{
         this.remainingVolume = newVol;
     }
 
-    //TODO
     @Override
     public TradableDTO makeTradableDTO() {
-        return null;
+        return new TradableDTO(this);
     }
 
     @Override
@@ -99,9 +102,12 @@ public class TradableImpl implements Tradable{
     }
 
     private void setUser(String userIn) throws InvalidTradableException{
-        if ((userIn.length() != 3) || !(userIn.matches("[a-zA-Z]+")))
-            throw new InvalidTradableException("userIn must be 3 alphabetical characters only.");
-        this.user = userIn.toUpperCase();
+        try {
+            this.productUserValidator.setUser(userIn);
+        } catch (InvalidInputException e) {
+            throw new InvalidTradableException(e.getMessage());
+        }
+        this.user = this.productUserValidator.getUser();
     }
 
     @Override
@@ -110,9 +116,12 @@ public class TradableImpl implements Tradable{
     }
 
     private void setProduct(String productIn) throws InvalidTradableException{
-        if ((productIn.isEmpty() || productIn.length() > 5) || !(productIn.matches("[a-zA-Z.]") || productIn.matches(".")))
-            throw new InvalidTradableException("productIn must be 1-5 alphabetical characters. Can also include '.'.");
-        this.product = productIn.toUpperCase();
+        try {
+            this.productUserValidator.setProduct(productIn);
+        } catch (InvalidInputException e) {
+            throw new InvalidTradableException(e.getMessage());
+        }
+        this.product = this.productUserValidator.getProduct();
     }
 
     @Override

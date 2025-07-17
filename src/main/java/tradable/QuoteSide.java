@@ -1,6 +1,8 @@
 package tradable;
 
 import book.BookSide;
+import exceptions.InvalidInputException;
+import exceptions.InvalidTradableException;
 import price.Price;
 
 public class QuoteSide implements Tradable{
@@ -13,7 +15,7 @@ public class QuoteSide implements Tradable{
             Price priceIn,
             int originalVolumeIn,
             BookSide sideIn
-    ) {
+    ) throws InvalidInputException, InvalidTradableException {
         this.tradable = new TradableImpl(
                 userIn,
                 productIn,
@@ -90,6 +92,7 @@ public class QuoteSide implements Tradable{
 
     //AXE BUY side quote for TGT: $134.00, Orig Vol: 50, Rem Vol: 50, Fill Vol: 0, CXL Vol: 0, ID:
     //AXETGT$134.00506729337603300
+
     @Override
     public String toString(){
         return getUser() + getSide() + "quote for " + getProduct() + ":" + getPrice() + ", Orig vol: " +
