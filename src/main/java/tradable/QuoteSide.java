@@ -3,12 +3,11 @@ package tradable;
 import book.BookSide;
 import price.Price;
 
-
-public class Order implements Tradable {
+public class QuoteSide implements Tradable{
 
     private final Tradable tradable;
 
-    public Order(
+    public QuoteSide(
             String userIn,
             String productIn,
             Price priceIn,
@@ -30,16 +29,6 @@ public class Order implements Tradable {
     }
 
     @Override
-    public void setRemainingVolume(int newVol) {
-        this.tradable.setRemainingVolume(newVol);
-    }
-
-    @Override
-    public int getRemainingVolume() {
-        return this.tradable.getRemainingVolume();
-    }
-
-    @Override
     public void setCancelledVolume(int newVol) {
         this.tradable.setCancelledVolume(newVol);
     }
@@ -47,6 +36,16 @@ public class Order implements Tradable {
     @Override
     public int getCancelledVolume() {
         return this.tradable.getCancelledVolume();
+    }
+
+    @Override
+    public void setRemainingVolume(int newVol) {
+        this.tradable.setRemainingVolume(newVol);
+    }
+
+    @Override
+    public int getRemainingVolume() {
+        return this.tradable.getRemainingVolume();
     }
 
     @Override
@@ -89,13 +88,12 @@ public class Order implements Tradable {
         return this.tradable.getOriginalVolume();
     }
 
-    //AXE SELL order: TGT at $134.00, Orig Vol: 50, Rem Vol: 50, Fill Vol: 0, CXL Vol: 0, ID:
-    //AXETGT$134.00506492572504400
+    //AXE BUY side quote for TGT: $134.00, Orig Vol: 50, Rem Vol: 50, Fill Vol: 0, CXL Vol: 0, ID:
+    //AXETGT$134.00506729337603300
     @Override
     public String toString(){
-        return getUser() + getSide() + "order: " + getProduct() + "at " + getPrice() + ", Orig vol: " +
+        return getUser() + getSide() + "quote for " + getProduct() + ":" + getPrice() + ", Orig vol: " +
                 getOriginalVolume() + ", Rem Vol: " + getRemainingVolume() + ", Fill Vol: " + getFilledVolume() +
                 ", CXL Vol: " + getCancelledVolume() + ", ID: " + getId();
     }
 }
-
