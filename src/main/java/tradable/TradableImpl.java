@@ -1,6 +1,7 @@
 package tradable;
 
-import common.ProductUserValidator;
+import common.productValidator;
+import common.userValidator;
 import book.BookSide;
 import exceptions.InvalidInputException;
 import exceptions.InvalidTradableException;
@@ -8,7 +9,10 @@ import price.Price;
 
 public class TradableImpl implements Tradable{
 
-    private final ProductUserValidator productUserValidator;
+
+    private final productValidator productValidator;
+    private final userValidator userValidator;
+
     private String user, product, id;
     private Price price;
     private int originalVolume, remainingVolume;
@@ -23,7 +27,9 @@ public class TradableImpl implements Tradable{
             int originalVolumeIn,
             BookSide sideIn
     ) throws InvalidInputException, InvalidTradableException {
-        this.productUserValidator = new ProductUserValidator(userIn, productIn);
+
+        this.productValidator = new productValidator(productIn);
+        this.userValidator = new userValidator(userIn);
         setUser(userIn);
         setProduct(productIn);
         setPrice(priceIn);
@@ -103,11 +109,11 @@ public class TradableImpl implements Tradable{
 
     private void setUser(String userIn) throws InvalidTradableException{
         try {
-            this.productUserValidator.setUser(userIn);
+            this.userValidator.setUser(userIn);
         } catch (InvalidInputException e) {
             throw new InvalidTradableException(e.getMessage());
         }
-        this.user = this.productUserValidator.getUser();
+        this.user = this.userValidator.getUser();
     }
 
     @Override
@@ -117,11 +123,11 @@ public class TradableImpl implements Tradable{
 
     private void setProduct(String productIn) throws InvalidTradableException{
         try {
-            this.productUserValidator.setProduct(productIn);
+            this.productValidator.setProduct(productIn);
         } catch (InvalidInputException e) {
             throw new InvalidTradableException(e.getMessage());
         }
-        this.product = this.productUserValidator.getProduct();
+        this.product = this.productValidator.getProduct();
     }
 
     @Override

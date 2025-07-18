@@ -1,6 +1,7 @@
 package quote;
 import book.BookSide;
-import common.ProductUserValidator;
+import common.productValidator;
+import common.userValidator;
 import exceptions.InvalidInputException;
 import exceptions.InvalidQuoteException;
 
@@ -17,9 +18,12 @@ import tradable.QuoteSide;
 
 public class Quote {
 
+    private final productValidator productValidator;
+    private final userValidator userValidator;
+
     private String user, product;
     private QuoteSide buySide, sellSide;
-    private final ProductUserValidator productUserValidator;
+
 
     public Quote(String symbol,
                  Price buyPrice,
@@ -28,7 +32,9 @@ public class Quote {
                  int sellVolume,
                  String userName) throws InvalidQuoteException, InvalidInputException, InvalidTradableException {
 
-        this.productUserValidator = new ProductUserValidator(userName, symbol);
+
+        this.productValidator = new productValidator(symbol);
+        this.userValidator = new userValidator(userName);
         setUser(userName);
         setProduct(symbol);
         setBuySide(userName, symbol, buyPrice, buyVolume);
@@ -38,11 +44,11 @@ public class Quote {
 
     private void setUser(String userIn) throws InvalidQuoteException {
         try {
-            this.productUserValidator.setUser(userIn);
+            this.userValidator.setUser(userIn);
         } catch (InvalidInputException e) {
             throw new InvalidQuoteException(e.getMessage());
         }
-        this.user = this.productUserValidator.getUser();
+        this.user = this.userValidator.getUser();
     }
 
     public String getUser(){
@@ -65,11 +71,11 @@ public class Quote {
 
     private void setProduct(String productIn) throws InvalidQuoteException{
         try {
-            this.productUserValidator.setProduct(productIn);
+            this.productValidator.setProduct(productIn);
         } catch (InvalidInputException e) {
             throw new InvalidQuoteException(e.getMessage());
         }
-        this.product = this.productUserValidator.getProduct();
+        this.product = this.productValidator.getProduct();
     }
 
     public String getProduct(){
