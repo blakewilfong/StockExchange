@@ -30,6 +30,7 @@ public class TradableImpl implements Tradable{
 
         this.productValidator = new productValidator(productIn);
         this.userValidator = new userValidator(userIn);
+
         setUser(userIn);
         setProduct(productIn);
         setPrice(priceIn);

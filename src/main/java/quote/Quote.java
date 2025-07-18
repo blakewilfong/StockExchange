@@ -2,9 +2,9 @@ package quote;
 import book.BookSide;
 import common.productValidator;
 import common.userValidator;
+
 import exceptions.InvalidInputException;
 import exceptions.InvalidQuoteException;
-
 import exceptions.InvalidTradableException;
 import price.Price;
 import tradable.QuoteSide;
