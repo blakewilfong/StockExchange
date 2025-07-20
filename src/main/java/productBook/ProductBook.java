@@ -6,47 +6,47 @@ import exceptions.InvalidProductBookException;
 import quote.Quote;
 import tradable.Tradable;
 import tradable.TradableDTO;
+import productBook.ProductBookSide;
+
 
 public class ProductBook {
 
     private String product;
     private final productValidator productValidator;
+    private final ProductBookSide buySide, sellSide;
 
     public ProductBook(String product) throws InvalidInputException, InvalidProductBookException {
 
         productValidator = new productValidator(product);
         setProduct(product);
-        ProductBookSide buySide = new ProductBookside();
-        ProductBookSide sellSide = new ProductBookside();
+        buySide = new ProductBookSide(BookSide.BUY);
+        sellSide = new ProductBookSide(BookSide.SELL);
     }
-
-
-    // TODO
-    //  Call the “add” method of the ProductBookSide the tradable is for (BUY or SELL) and save the
-    //  TradableDTO that is returned from the “add” call. Call “tryTrade” (seen below), then return the
 
     public TradableDTO add(Tradable t) throws InvalidProductBookException{
         System.out.println("**ADD: " + t);
         if (t == null) throw new InvalidProductBookException("Tradable can not be null.");
 
+        TradableDTO dto;
+        BookSide side = t.getSide();
 
+        if (side == BookSide.BUY){
+            dto = buySide.add(t);
+        }
+        else dto = sellSide.add(t);
+        tryTrade();
+        return dto;
     }
 
-
-    // TODO
-    //  First, call removeQuotesForUser (passing the user id as the parameter).
-    //  Call the “add” method of the BUY ProductBookSide, passing the BUY-side of the quote, and save the
-    //  TradableDTO that is returned from the “add” call.
-    //  Call the “add” method of the SELL ProductBookSide, passing the SELL-side of the quote, and save the
-    //  TradableDTO that is returned from the “add” call.
-    //  Call “tryTrade” (seen below)
-    //  Return both TradableDTOs in an array of TradableDTOs (BUY side DTO is index 0, SELL side DTO is index
-    //  1)
-
     public TradableDTO[] add(Quote qte) throws InvalidProductBookException{
+
         if (qte == null) throw new InvalidProductBookException("Quote can not be null");
 
-
+        removeQuotesForUser(qte.getUser());
+        TradableDTO buyDTO  = buySide.add(qte.getQuoteSide(BookSide.BUY));
+        TradableDTO sellDTO = sellSide.add(qte.getQuoteSide(BookSide.SELL));
+        tryTrade();
+        return new TradableDTO[] {buyDTO, sellDTO};
     }
 
     // TODO
@@ -54,7 +54,8 @@ public class ProductBook {
     //  (BUY or SELL) and return the resulting TradableDTO.
 
     public TradableDTO cancel(BookSide side, String orderId){
-
+        ProductBookSide bookSide = (side == BookSide.BUY) ? buySide : sellSide;
+        return bookSide.cancel(orderId);
     }
 
     // TODO

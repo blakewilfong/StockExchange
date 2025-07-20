@@ -2,7 +2,6 @@ package productBook;
 import book.BookSide;
 import exceptions.InvalidProductBookException;
 import price.Price;
-import quote.Quote;
 import tradable.Tradable;
 import tradable.TradableDTO;
 import java.util.ArrayList;
