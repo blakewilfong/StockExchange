@@ -56,15 +56,6 @@ public class ProductBook {
         return bookSide.cancel(orderId);
     }
 
-    // TODO
-    //  [Method is used for Quotes] This method should do the following:
-    //  Call the “removeQuotesForUser” method of the BUY ProductBookSide, passing the String userName,
-    //  and save the TradableDTO that is returned.
-    //  Call the “removeQuotesForUser” method of the SELL ProductBookSide, passing String userName, and
-    //  save the TradableDTO that is returned.
-    //  Then return both TradableDTOs in an array of TradableDTOs (BUY side DTO is index 0, SELL side DTO is
-    //  index 1).
-
     public TradableDTO[] removeQuotesForUser(String userName){
 
         TradableDTO buyDTO = buySide.removeQuotesForUser(userName);
@@ -81,16 +72,14 @@ public class ProductBook {
 
     }
 
-    // TODO
-    //  This method returns a String summary of the top-of-book for the specified side.
-    //  The String should be returned as follows:
-    //  "Top of BUY book: Top of BUY book: $122.50 x 75 -OR-
-    //  Top of SELL book: Top of SELL book: $122.90 x 100"
-
     public String getTopOfBookString(BookSide side){
 
-        return null;
+        if (side == BookSide.BUY) {
+            return "Top of BUY book: Top of BUY book: " + buySide.topOfBookPrice() + " x " + buySide.topOfBookVolume();
+        }
+        return "Top of SELL book: Top of SELL book: " + sellSide.topOfBookPrice() + " x " + sellSide.topOfBookVolume();
     }
+
     // TODO
     //  Override the toString method to generate a String containing a summary of the book
     //  content as follows (be sure to let the ProductBookSides generate their part of the String).
