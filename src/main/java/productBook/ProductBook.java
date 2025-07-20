@@ -24,6 +24,7 @@ public class ProductBook {
     }
 
     public TradableDTO add(Tradable t) throws InvalidProductBookException{
+
         System.out.println("**ADD: " + t);
         if (t == null) throw new InvalidProductBookException("Tradable can not be null.");
 
@@ -49,11 +50,8 @@ public class ProductBook {
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
-    // TODO
-    //  [Method is used for Orders] Call the “cancel” method of the ProductBookSide the order is for
-    //  (BUY or SELL) and return the resulting TradableDTO.
-
     public TradableDTO cancel(BookSide side, String orderId){
+
         ProductBookSide bookSide = (side == BookSide.BUY) ? buySide : sellSide;
         return bookSide.cancel(orderId);
     }
@@ -69,6 +67,9 @@ public class ProductBook {
 
     public TradableDTO[] removeQuotesForUser(String userName){
 
+        TradableDTO buyDTO = buySide.removeQuotesForUser(userName);
+        TradableDTO sellDTO = sellSide.removeQuotesForUser(userName);
+        return new TradableDTO[] {buyDTO, sellDTO};
     }
 
     // TODO
@@ -86,14 +87,20 @@ public class ProductBook {
     //  "Top of BUY book: Top of BUY book: $122.50 x 75 -OR-
     //  Top of SELL book: Top of SELL book: $122.90 x 100"
 
-    public String getTopOfBookString(Side side){
+    public String getTopOfBookString(BookSide side){
 
+        return null;
     }
     // TODO
     //  Override the toString method to generate a String containing a summary of the book
     //  content as follows (be sure to let the ProductBookSides generate their part of the String).
     @Override
-    public String toString()
+    public String toString(){
+
+        return null;
+    }
+
+
 
     public String getProduct() {
         return this.product;

@@ -100,8 +100,6 @@ public class ProductBookSide {
 
     }
 
-    //TODO
-    //  Fix this toString()
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
