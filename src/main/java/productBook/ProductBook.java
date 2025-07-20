@@ -80,13 +80,15 @@ public class ProductBook {
         return "Top of SELL book: Top of SELL book: " + sellSide.topOfBookPrice() + " x " + sellSide.topOfBookVolume();
     }
 
-    // TODO
-    //  Override the toString method to generate a String containing a summary of the book
-    //  content as follows (be sure to let the ProductBookSides generate their part of the String).
     @Override
     public String toString(){
 
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Product: ").append(getProduct()).append("\n");
+        sb.append("\t").append(buySide.toString());
+        sb.append("\t").append(sellSide.toString());
+
+        return sb.toString();
     }
 
 
