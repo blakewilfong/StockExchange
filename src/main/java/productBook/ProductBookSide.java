@@ -6,6 +6,7 @@ import quote.Quote;
 import tradable.Tradable;
 import tradable.TradableDTO;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.TreeMap;
 
 
@@ -104,17 +105,22 @@ public class ProductBookSide {
     //  Fix this toString()
     @Override
     public String toString() {
-        if (side == BookSide.BUY){
-            //Side: BUY
-            System.out.println("Side: BUY");
-            //for each price key
-            //Price: $9.95
-            System.out.println("\tPrice: " + );
-            //for each item in that price keys array list of tradables
-            //CCC order: BUY AMZN at $9.95, Orig Vol: 70, Rem Vol: 70, Fill Vol: 0, CXL Vol: 0, ID: CCCAMZN$9.95189383477035100
+        StringBuilder sb = new StringBuilder();
+        Set<Price> keys;
+        sb.append("Side: ").append(side).append("\n");
+        if (side == BookSide.BUY) {
+            keys = bookEntries.descendingKeySet();
+        } else keys = bookEntries.keySet();
 
+        for (Price p : keys) {
+            sb.append("\tPrice: ").append(p).append("\n");
+
+            ArrayList<Tradable> entry = bookEntries.get(p);
+            for (Tradable t : entry) {
+                sb.append("\t\t").append(t).append("\n");
+            }
         }
-
+        return sb.toString();
     }
 
 }
