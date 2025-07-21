@@ -96,7 +96,16 @@ public class ProductBookSide {
     //  Trade out any tradablesat or better than the Price passed in, up to
     //  the volume value passed in. See diagram in Appendix B for how this should work.
 
-    public void tradeOut(Price price, int vol) {
+    public void tradeOut(Price price, int volToTrade) {
+        Price topPrice = topOfBookPrice();
+        if (topPrice == null || topPrice.getPrice() > price.getPrice()) return;
+
+        ArrayList<Tradable> atPrice = bookEntries.get(topPrice);
+        int totalVolAtPrice = 0;
+        for(Tradable t: atPrice) totalVolAtPrice += t.getRemainingVolume();
+        while (volToTrade >= totalVolAtPrice){
+
+        }
 
     }
 

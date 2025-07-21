@@ -64,11 +64,6 @@ public class ProductBook {
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
-    // TODO
-    //   Checks to see if the book sides are tradable, and if so, perform the trades. If not, it
-    //   does nothing. See diagram in Appendix A for how this should work.
-    //   See diagram in Appendix A for how this should work.
-
     public void tryTrade(){
         Price topBuy = buySide.topOfBookPrice();
         Price topSell = sellSide.topOfBookPrice();
