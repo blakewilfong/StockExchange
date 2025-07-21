@@ -17,7 +17,7 @@ public class Order implements Tradable {
             int originalVolumeIn,
             BookSide sideIn
     ) throws InvalidInputException, InvalidTradableException {
-        this.tradable = new TradableImpl(
+        tradable = new TradableImpl(
                 userIn,
                 productIn,
                 priceIn,
@@ -28,32 +28,32 @@ public class Order implements Tradable {
 
     @Override
     public String getId() {
-        return this.tradable.getId();
+        return tradable.getId();
     }
 
     @Override
     public void setRemainingVolume(int newVol) {
-        this.tradable.setRemainingVolume(newVol);
+        tradable.setRemainingVolume(newVol);
     }
 
     @Override
     public int getRemainingVolume() {
-        return this.tradable.getRemainingVolume();
+        return tradable.getRemainingVolume();
     }
 
     @Override
     public void setCancelledVolume(int newVol) {
-        this.tradable.setCancelledVolume(newVol);
+        tradable.setCancelledVolume(newVol);
     }
 
     @Override
     public int getCancelledVolume() {
-        return this.tradable.getCancelledVolume();
+        return tradable.getCancelledVolume();
     }
 
     @Override
     public TradableDTO makeTradableDTO() {
-        return this.tradable.makeTradableDTO();
+        return tradable.makeTradableDTO();
     }
 
     @Override

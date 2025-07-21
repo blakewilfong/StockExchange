@@ -97,16 +97,36 @@ public class ProductBookSide {
     //  the volume value passed in. See diagram in Appendix B for how this should work.
 
     public void tradeOut(Price price, int volToTrade) {
+
         Price topPrice = topOfBookPrice();
         if (topPrice == null || topPrice.getPrice() > price.getPrice()) return;
 
         ArrayList<Tradable> atPrice = bookEntries.get(topPrice);
         int totalVolAtPrice = 0;
         for(Tradable t: atPrice) totalVolAtPrice += t.getRemainingVolume();
-        while (volToTrade >= totalVolAtPrice){
 
+        if (volToTrade >= totalVolAtPrice){
+            for(Tradable t: atPrice){
+                int rv = t.getRemainingVolume();
+                t.setFilledVolume(t.getOriginalVolume());
+                t.setRemainingVolume(0);
+                System.out.println("FULL FILL");
+            }
+            bookEntries.remove(topOfBookPrice());
+            return;
         }
 
+        int remainder = volToTrade;
+
+        for (Tradable t: atPrice){
+            double ratio = (double) t.getRemainingVolume() / totalVolAtPrice;
+            int toTrade = (int) Math.ceil(volToTrade * ratio);
+            toTrade = Math.min(toTrade, remainder);
+            t.setFilledVolume(t.getFilledVolume() + toTrade);
+            t.setRemainingVolume(t.getRemainingVolume() - toTrade);
+            System.out.println("PARTIAL FILL");
+            remainder -= toTrade;
+        }
     }
 
     @Override
