@@ -3,6 +3,7 @@ import book.BookSide;
 import common.productValidator;
 import exceptions.InvalidInputException;
 import exceptions.InvalidProductBookException;
+import price.Price;
 import quote.Quote;
 import tradable.Tradable;
 import tradable.TradableDTO;
@@ -69,6 +70,20 @@ public class ProductBook {
     //   See diagram in Appendix A for how this should work.
 
     public void tryTrade(){
+        Price topBuy = buySide.topOfBookPrice();
+        Price topSell = sellSide.topOfBookPrice();
+        if (topBuy == null || topSell == null) return;
+        int totalToTrade = Math.max(buySide.topOfBookVolume(),sellSide.topOfBookVolume());
+        int toTrade;
+        while(totalToTrade > 0) {
+            topBuy = buySide.topOfBookPrice();
+            topSell = sellSide.topOfBookPrice();
+            if (topBuy == null || topSell == null || topSell.getPrice() > topBuy.getPrice()) return;
+            toTrade = Math.min(buySide.topOfBookVolume(), sellSide.topOfBookVolume());
+            buySide.tradeOut(topBuy, toTrade);
+            sellSide.tradeOut(topBuy, toTrade);
+            totalToTrade -= toTrade;
+        }
 
     }
 
