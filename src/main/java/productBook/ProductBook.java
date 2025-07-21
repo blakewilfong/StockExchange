@@ -7,7 +7,6 @@ import price.Price;
 import quote.Quote;
 import tradable.Tradable;
 import tradable.TradableDTO;
-import productBook.ProductBookSide;
 
 
 public class ProductBook {
@@ -26,7 +25,7 @@ public class ProductBook {
 
     public TradableDTO add(Tradable t) throws InvalidProductBookException{
 
-        System.out.println("**ADD: " + t);
+        //System.out.println("**ADD: " + t);
         if (t == null) throw new InvalidProductBookException("Tradable can not be null.");
 
         TradableDTO dto;
@@ -81,22 +80,40 @@ public class ProductBook {
         }
 
     }
-
+    //  Top of BUY book: Top of BUY book: $0.00 x 0
     public String getTopOfBookString(BookSide side){
+        int buyPrice = 0;
+        int sellPrice = 0;
+        int buyVolume = 0;
+        int sellVolume = 0;
+
+        if (buySide.topOfBookPrice() != null){
+            buyPrice = buySide.topOfBookPrice().getPrice();
+            buyVolume = buySide.topOfBookVolume();
+        }
+        if (sellSide.topOfBookPrice() != null){
+            sellPrice = sellSide.topOfBookPrice().getPrice();
+            sellVolume = sellSide.topOfBookVolume();
+        }
+
+        String formattedBuyPrice = String.format("$%.2f", buyPrice / 100.0);
+        String formattedSellPrice = String.format("$%.2f", sellPrice / 100.0);
 
         if (side == BookSide.BUY) {
-            return "Top of BUY book: Top of BUY book: " + buySide.topOfBookPrice() + " x " + buySide.topOfBookVolume();
+            return "Top of BUY book: Top of BUY book: " + formattedBuyPrice + " x " + buyVolume;
         }
-        return "Top of SELL book: Top of SELL book: " + sellSide.topOfBookPrice() + " x " + sellSide.topOfBookVolume();
+        return "Top of SELL book: Top of SELL book: " + formattedSellPrice + " x " + sellVolume;
     }
 
     @Override
     public String toString(){
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Product: ").append(getProduct()).append("\n");
-        sb.append("\t").append(buySide.toString());
-        sb.append("\t").append(sellSide.toString());
+        sb.append("--------------------------------------------\n");
+        sb.append("Product Book: ").append(getProduct()).append("\n");
+        sb.append(buySide.toString());
+        sb.append(sellSide.toString());
+        sb.append("--------------------------------------------\n");
 
         return sb.toString();
     }

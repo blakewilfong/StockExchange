@@ -137,7 +137,10 @@ public class ProductBookSide {
         if (side == BookSide.BUY) {
             keys = bookEntries.descendingKeySet();
         } else keys = bookEntries.keySet();
-
+        if (keys.isEmpty()) {
+            sb.append("\t\t<Empty>\n");
+            return sb.toString();
+        }
         for (Price p : keys) {
             sb.append("\tPrice: ").append(p).append("\n");
 

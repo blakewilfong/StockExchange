@@ -3,10 +3,14 @@
 
 import price.PriceFactory;
 import productBook.ProductBook;
+import quote.Quote;
 import tradable.Order;
+import tradable.Tradable;
 import tradable.TradableDTO;
 
+import book.BookSide;
 import static book.BookSide.BUY;
+import static book.BookSide.SELL;
 
 public class Main {
 
