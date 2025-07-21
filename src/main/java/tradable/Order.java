@@ -91,8 +91,7 @@ public class Order implements Tradable {
         return this.tradable.getOriginalVolume();
     }
 
-    //AXE SELL order: TGT at $134.00, Orig Vol: 50, Rem Vol: 50, Fill Vol: 0, CXL Vol: 0, ID:
-    //AXETGT$134.00506492572504400
+
     @Override
     public String toString(){
         return getUser() + getSide() + "order: " + getProduct() + "at " + getPrice() + ", Orig vol: " +

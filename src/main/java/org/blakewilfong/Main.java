@@ -1,5 +1,4 @@
-
-
+package org.blakewilfong;
 
 import price.PriceFactory;
 import productBook.ProductBook;

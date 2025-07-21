@@ -99,7 +99,7 @@ public class TradableImpl implements Tradable{
     }
 
     private void setSide(BookSide sideIn) throws InvalidTradableException{
-        if (side == null) throw new InvalidTradableException("sideIn cannot be null");
+        if (sideIn == null) throw new InvalidTradableException("sideIn cannot be null");
         this.side = sideIn;
     }
 
