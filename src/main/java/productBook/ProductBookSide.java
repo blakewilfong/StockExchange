@@ -72,7 +72,7 @@ public class ProductBookSide {
     public Price topOfBookPrice() {
 
         if (bookEntries.isEmpty()) return null;
-        return bookEntries.firstKey();
+        return bookEntries.lastKey();
     }
 
     public int topOfBookVolume() {

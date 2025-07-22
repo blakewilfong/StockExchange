@@ -27,6 +27,7 @@ public class ProductBook {
 
         //System.out.println("**ADD: " + t);
         if (t == null) throw new InvalidProductBookException("Tradable can not be null.");
+        System.out.println("**ADD: " + t);
 
         TradableDTO dto;
         BookSide side = t.getSide();
@@ -100,9 +101,9 @@ public class ProductBook {
         String formattedSellPrice = String.format("$%.2f", sellPrice / 100.0);
 
         if (side == BookSide.BUY) {
-            return "Top of BUY book: Top of BUY book: " + formattedBuyPrice + " x " + buyVolume;
+            return "Top of BUY book: " + formattedBuyPrice + " x " + buyVolume;
         }
-        return "Top of SELL book: Top of SELL book: " + formattedSellPrice + " x " + sellVolume;
+        return "Top of SELL book: " + formattedSellPrice + " x " + sellVolume;
     }
 
     @Override
@@ -113,7 +114,7 @@ public class ProductBook {
         sb.append("Product Book: ").append(getProduct()).append("\n");
         sb.append(buySide.toString());
         sb.append(sellSide.toString());
-        sb.append("--------------------------------------------\n");
+        sb.append("--------------------------------------------");
 
         return sb.toString();
     }
