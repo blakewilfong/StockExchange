@@ -46,8 +46,8 @@ public class ProductBookSide {
                     tradable.setRemainingVolume(0);
                     if (bookEntries.get(key).isEmpty()) {
                         bookEntries.remove(key);
-                        return new TradableDTO(tradable);
                     }
+                    return new TradableDTO(tradable);
 
                 }
             }
@@ -112,7 +112,7 @@ public class ProductBookSide {
                 t.setFilledVolume(t.getOriginalVolume());
                 t.setRemainingVolume(0);
 
-                System.out.println("\t\tFULL FILL: (" + side + t.getFilledVolume() + ") " + t);
+                System.out.println("\t\tFULL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
                 //atPrice.remove(t);
             }
             bookEntries.remove(topOfBookPrice());
@@ -127,7 +127,7 @@ public class ProductBookSide {
             toTrade = Math.min(toTrade, remainder);
             t.setFilledVolume(t.getFilledVolume() + toTrade);
             t.setRemainingVolume(t.getRemainingVolume() - toTrade);
-            System.out.println("\t\tPARTIAL FILL: (" + side + t.getFilledVolume() + ") " + t);
+            System.out.println("\t\tPARTIAL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
             remainder -= toTrade;
         }
     }
