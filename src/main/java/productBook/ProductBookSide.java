@@ -55,19 +55,20 @@ public class ProductBookSide {
 
     public TradableDTO removeQuotesForUser(String userName) {
 
-        TradableDTO dto = null;
+        TradableDTO dto;
         for (Price key : bookEntries.keySet()) {
             for (Tradable t : bookEntries.get(key)) {
                 if (t.getUser().equals(userName)) {
                     dto = cancel(t.getId());
-                    if (bookEntries.get(key).isEmpty()) {
-                        bookEntries.remove(key);
-                    }
-                    break;
+//                    if (bookEntries.get(key).isEmpty()) {
+//                        bookEntries.remove(key);
+//                        return dto;
+//                    }
+                    return dto;
                 }
             }
         }
-        return dto;
+        return null;
     }
 
     public Price topOfBookPrice() {

@@ -42,23 +42,31 @@ public class ProductBook {
     public TradableDTO[] add(Quote qte) throws InvalidProductBookException{
 
         if (qte == null) throw new InvalidProductBookException("Quote can not be null");
+        removeQuotesForUser(qte.getUser());
+
+
         System.out.println("**ADD: " + qte.getQuoteSide(BookSide.BUY));
         System.out.println("**ADD: " + qte.getQuoteSide(BookSide.SELL));
-        removeQuotesForUser(qte.getUser());
+
         TradableDTO buyDTO  = buySide.add(qte.getQuoteSide(BookSide.BUY));
         TradableDTO sellDTO = sellSide.add(qte.getQuoteSide(BookSide.SELL));
         tryTrade();
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
-    public TradableDTO cancel(BookSide side, String orderId){
+    public TradableDTO cancel(BookSide side, String orderId) throws InvalidProductBookException{
+
+
 
         ProductBookSide bookSide = (side == BookSide.BUY) ? buySide : sellSide;
-        return bookSide.cancel(orderId);
+        TradableDTO cancelledOrder = bookSide.cancel(orderId);
+        if (cancelledOrder == null) throw new InvalidProductBookException("Cancelled order not found.");
+
+        return cancelledOrder;
     }
 
-    public TradableDTO[] removeQuotesForUser(String userName){
-
+    public TradableDTO[] removeQuotesForUser(String userName) throws InvalidProductBookException{
+        if (userName == null) throw new InvalidProductBookException("userName cannot be null.");
         TradableDTO buyDTO = buySide.removeQuotesForUser(userName);
         TradableDTO sellDTO = sellSide.removeQuotesForUser(userName);
         return new TradableDTO[] {buyDTO, sellDTO};
