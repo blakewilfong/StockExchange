@@ -94,10 +94,6 @@ public class ProductBookSide {
         return totalVolume;
     }
 
-    //TODO
-    //  Trade out any tradablesat or better than the Price passed in, up to
-    //  the volume value passed in. See diagram in Appendix B for how this should work.
-
     public void tradeOut(Price price, int volToTrade) {
 
         Price topPrice = topOfBookPrice();
@@ -112,7 +108,9 @@ public class ProductBookSide {
                 int rv = t.getRemainingVolume();
                 t.setFilledVolume(t.getOriginalVolume());
                 t.setRemainingVolume(0);
-                System.out.println("FULL FILL");
+
+                System.out.println("\t\tFULL FILL: (" + side + t.getFilledVolume() + ") " + t);
+
             }
             bookEntries.remove(topOfBookPrice());
             return;
@@ -126,7 +124,7 @@ public class ProductBookSide {
             toTrade = Math.min(toTrade, remainder);
             t.setFilledVolume(t.getFilledVolume() + toTrade);
             t.setRemainingVolume(t.getRemainingVolume() - toTrade);
-            System.out.println("PARTIAL FILL");
+            System.out.println("\t\tPARTIAL FILL: (" + side + t.getFilledVolume() + ") " + t);
             remainder -= toTrade;
         }
     }
