@@ -12,7 +12,7 @@ public abstract class PriceFactory {
 
         if (strValue.contains("$")) strValue = strValue.replace("$", "");
         if (strValue.contains(",")) strValue = strValue.replaceAll(",", "");
-        System.out.println(strValue);
+        //System.out.println(strValue);
 
         if (strValue.contains(".")) {
 

@@ -90,12 +90,9 @@ public class QuoteSide implements Tradable{
         return this.tradable.getOriginalVolume();
     }
 
-    //AXE BUY side quote for TGT: $134.00, Orig Vol: 50, Rem Vol: 50, Fill Vol: 0, CXL Vol: 0, ID:
-    //AXETGT$134.00506729337603300
-
     @Override
     public String toString(){
-        return getUser() + getSide() + "quote for " + getProduct() + ":" + getPrice() + ", Orig vol: " +
+        return getUser() + " " + getSide() + " quote for " + getProduct() + ":" + getPrice() + ", Orig vol: " +
                 getOriginalVolume() + ", Rem Vol: " + getRemainingVolume() + ", Fill Vol: " + getFilledVolume() +
                 ", CXL Vol: " + getCancelledVolume() + ", ID: " + getId();
     }

@@ -32,7 +32,7 @@ public class ProductBookSide {
 
     public TradableDTO cancel(String tradableId) {
 
-        Tradable tradable = null;
+        Tradable tradable;
         for (Price key : bookEntries.keySet()) {
             for (Tradable t : bookEntries.get(key)) {
                 if (t.getId().equals(tradableId)) {
@@ -43,12 +43,13 @@ public class ProductBookSide {
                     tradable.setRemainingVolume(0);
                     if (bookEntries.get(key).isEmpty()) {
                         bookEntries.remove(key);
+                        return new TradableDTO(tradable);
                     }
-                    break;
+
                 }
             }
         }
-        return (tradable == null ? null : new TradableDTO(tradable));
+        return null;
     }
 
 
@@ -72,7 +73,7 @@ public class ProductBookSide {
     public Price topOfBookPrice() {
 
         if (bookEntries.isEmpty()) return null;
-        return bookEntries.lastKey();
+        return (side == BookSide.BUY) ? bookEntries.lastKey() : bookEntries.firstKey();
     }
 
     public int topOfBookVolume() {
@@ -142,11 +143,11 @@ public class ProductBookSide {
             return sb.toString();
         }
         for (Price p : keys) {
-            sb.append("\tPrice: ").append(p).append("\n");
+            sb.append("\t\t").append(p).append(":\n");
 
             ArrayList<Tradable> entry = bookEntries.get(p);
             for (Tradable t : entry) {
-                sb.append("\t\t").append(t).append("\n");
+                sb.append("\t\t\t\t").append(t).append("\n");
             }
         }
         return sb.toString();

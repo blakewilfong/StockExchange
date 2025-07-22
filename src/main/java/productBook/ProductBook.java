@@ -25,7 +25,6 @@ public class ProductBook {
 
     public TradableDTO add(Tradable t) throws InvalidProductBookException{
 
-        //System.out.println("**ADD: " + t);
         if (t == null) throw new InvalidProductBookException("Tradable can not be null.");
         System.out.println("**ADD: " + t);
 
@@ -43,7 +42,8 @@ public class ProductBook {
     public TradableDTO[] add(Quote qte) throws InvalidProductBookException{
 
         if (qte == null) throw new InvalidProductBookException("Quote can not be null");
-
+        System.out.println("**ADD: " + qte.getQuoteSide(BookSide.BUY));
+        System.out.println("**ADD: " + qte.getQuoteSide(BookSide.SELL));
         removeQuotesForUser(qte.getUser());
         TradableDTO buyDTO  = buySide.add(qte.getQuoteSide(BookSide.BUY));
         TradableDTO sellDTO = sellSide.add(qte.getQuoteSide(BookSide.SELL));
