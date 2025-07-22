@@ -141,15 +141,15 @@ public class ProductBookSide {
             keys = bookEntries.descendingKeySet();
         } else keys = bookEntries.keySet();
         if (keys.isEmpty()) {
-            sb.append("\t\t<Empty>\n");
+            sb.append("\t<Empty>\n");
             return sb.toString();
         }
         for (Price p : keys) {
-            sb.append("\t\t").append(p).append(":\n");
+            sb.append("\t").append(p).append(":\n");
 
             ArrayList<Tradable> entry = bookEntries.get(p);
             for (Tradable t : entry) {
-                sb.append("\t\t\t\t").append(t).append("\n");
+                sb.append("\t\t").append(t).append("\n");
             }
         }
         return sb.toString();
