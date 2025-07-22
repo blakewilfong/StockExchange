@@ -27,6 +27,9 @@ public class ProductBookSide {
             bookEntries.put(o.getPrice(), new ArrayList<Tradable>());
             bookEntries.get(o.getPrice()).add(o);
         }
+        else {
+            bookEntries.get(o.getPrice()).add(o);
+        }
         return new TradableDTO(o);
     }
 
@@ -110,7 +113,7 @@ public class ProductBookSide {
                 t.setRemainingVolume(0);
 
                 System.out.println("\t\tFULL FILL: (" + side + t.getFilledVolume() + ") " + t);
-
+                //atPrice.remove(t);
             }
             bookEntries.remove(topOfBookPrice());
             return;
