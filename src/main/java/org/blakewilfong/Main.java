@@ -6,10 +6,9 @@ import quote.Quote;
 import tradable.Order;
 import tradable.Tradable;
 import tradable.TradableDTO;
-
-import book.BookSide;
-import static book.BookSide.BUY;
-import static book.BookSide.SELL;
+import common.BookSide;
+import static common.BookSide.BUY;
+import static common.BookSide.SELL;
 
 public class Main {
 

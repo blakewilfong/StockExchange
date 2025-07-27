@@ -1,5 +1,5 @@
 package quote;
-import book.BookSide;
+import common.BookSide;
 import common.productValidator;
 import common.userValidator;
 
@@ -8,13 +8,6 @@ import exceptions.InvalidQuoteException;
 import exceptions.InvalidTradableException;
 import price.Price;
 import tradable.QuoteSide;
-
-
-//A Quote is made up of the BUY and SELL prices & quantities that a trader is willing to buy and sell a stock. The BUY
-//part is referred to as the buy-side, the SELL referred to as the sell-side. The buy-side represents the price and
-//quantity (referred to as the “volume”) at which the trader will buy the stock; the sell-side represents the price and
-//quantity at which the trader will sell the stock.
-
 
 public class Quote {
 

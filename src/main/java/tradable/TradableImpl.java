@@ -2,7 +2,7 @@ package tradable;
 
 import common.productValidator;
 import common.userValidator;
-import book.BookSide;
+import common.BookSide;
 import exceptions.InvalidInputException;
 import exceptions.InvalidTradableException;
 import price.Price;

@@ -1,5 +1,5 @@
 package productBook;
-import book.BookSide;
+import common.BookSide;
 import common.productValidator;
 import exceptions.InvalidInputException;
 import exceptions.InvalidProductBookException;

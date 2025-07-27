@@ -1,5 +1,5 @@
 package tradable;
-import book.BookSide;
+import common.BookSide;
 import price.Price;
 
 
