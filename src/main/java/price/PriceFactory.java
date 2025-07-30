@@ -1,10 +1,19 @@
 package price;
 import exceptions.InvalidPriceException;
 
+import java.util.HashMap;
+
 public abstract class PriceFactory {
 
+    private static final HashMap<Integer, Price> prices = new HashMap<>();
+
     public static Price makePrice(int value) {
-        return new Price(value);
+        if (prices.containsKey(value)){
+            return prices.get(value);
+        }
+        Price newPrice = new Price(value);
+        prices.put(value, newPrice);
+        return newPrice;
     }
 
     public static Price makePrice(String strValue) throws InvalidPriceException {
@@ -35,6 +44,6 @@ public abstract class PriceFactory {
         else {
             intValue = Integer.parseInt(strValue) * 100;}
 
-        return new Price(intValue);
+        return makePrice(intValue);
     }
 }

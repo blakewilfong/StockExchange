@@ -9,7 +9,9 @@ import price.Price;
 
 public class TradableImpl implements Tradable{
 
-    private String user, product, id;
+    private final String user;
+    private final String product;
+    private String id;
     private Price price;
     private int originalVolume, remainingVolume;
     private int cancelledVolume = 0;
