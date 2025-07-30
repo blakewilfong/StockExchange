@@ -30,7 +30,7 @@ public class TradableImpl implements Tradable{
             this.user = UserValidator.validate(userIn);
             this.product = ProductValidator.validate(productIn);
         } catch (InvalidInputException e) {
-            throw new InvalidTradableException("Invalid input: " + e.getMessage(), e);
+            throw new InvalidTradableException("Bad input: " + e.getMessage(), e);
         }
         setPrice(priceIn);
         setOriginalVolume(originalVolumeIn);
