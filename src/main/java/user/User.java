@@ -30,6 +30,10 @@ public class User {
         tradables.put(o.tradableId(), o);
     }
 
+    public String getId(){
+        return userId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
