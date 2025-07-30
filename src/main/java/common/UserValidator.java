@@ -2,11 +2,11 @@ package common;
 
 import exceptions.InvalidInputException;
 
-public class userValidator {
+public class UserValidator {
 
     private String user;
 
-    public userValidator(String userIn) throws InvalidInputException {
+    public UserValidator(String userIn) throws InvalidInputException {
         setUser(userIn);
 
     }

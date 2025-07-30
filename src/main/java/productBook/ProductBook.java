@@ -1,6 +1,6 @@
 package productBook;
 import common.BookSide;
-import common.productValidator;
+import common.ProductValidator;
 import exceptions.InvalidInputException;
 import exceptions.InvalidProductBookException;
 import price.Price;
@@ -12,12 +12,12 @@ import tradable.TradableDTO;
 public class ProductBook {
 
     private String product;
-    private final productValidator productValidator;
+    private final ProductValidator productValidator;
     private final ProductBookSide buySide, sellSide;
 
     public ProductBook(String product) throws InvalidInputException, InvalidProductBookException {
 
-        productValidator = new productValidator(product);
+        productValidator = new ProductValidator(product);
         setProduct(product);
         buySide = new ProductBookSide(BookSide.BUY);
         sellSide = new ProductBookSide(BookSide.SELL);

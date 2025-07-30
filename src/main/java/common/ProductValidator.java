@@ -2,11 +2,11 @@ package common;
 
 import exceptions.InvalidInputException;
 
-public class productValidator {
+public class ProductValidator {
 
     private String product;
 
-    public productValidator(String productIn) throws InvalidInputException {
+    public ProductValidator(String productIn) throws InvalidInputException {
         setProduct(productIn);
 
     }

@@ -1,7 +1,7 @@
 package tradable;
 
-import common.productValidator;
-import common.userValidator;
+import common.ProductValidator;
+import common.UserValidator;
 import common.BookSide;
 import exceptions.InvalidInputException;
 import exceptions.InvalidTradableException;
@@ -10,8 +10,8 @@ import price.Price;
 public class TradableImpl implements Tradable{
 
 
-    private final productValidator productValidator;
-    private final userValidator userValidator;
+    private final ProductValidator productValidator;
+    private final UserValidator userValidator;
 
     private String user, product, id;
     private Price price;
@@ -28,8 +28,8 @@ public class TradableImpl implements Tradable{
             BookSide sideIn
     ) throws InvalidInputException, InvalidTradableException {
 
-        this.productValidator = new productValidator(productIn);
-        this.userValidator = new userValidator(userIn);
+        this.productValidator = new ProductValidator(productIn);
+        this.userValidator = new UserValidator(userIn);
 
         setUser(userIn);
         setProduct(productIn);

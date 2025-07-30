@@ -1,7 +1,7 @@
 package quote;
 import common.BookSide;
-import common.productValidator;
-import common.userValidator;
+import common.ProductValidator;
+import common.UserValidator;
 
 import exceptions.InvalidInputException;
 import exceptions.InvalidQuoteException;
@@ -11,8 +11,8 @@ import tradable.QuoteSide;
 
 public class Quote {
 
-    private final productValidator productValidator;
-    private final userValidator userValidator;
+    private final ProductValidator productValidator;
+    private final UserValidator userValidator;
 
     private String user, product;
     private QuoteSide buySide, sellSide;
@@ -26,8 +26,8 @@ public class Quote {
                  String userName) throws InvalidQuoteException, InvalidInputException, InvalidTradableException {
 
 
-        this.productValidator = new productValidator(symbol);
-        this.userValidator = new userValidator(userName);
+        this.productValidator = new ProductValidator(symbol);
+        this.userValidator = new UserValidator(userName);
         setUser(userName);
         setProduct(symbol);
         setBuySide(userName, symbol, buyPrice, buyVolume);
