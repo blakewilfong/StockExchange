@@ -21,7 +21,7 @@ public class User {
         try {
             userId = UserValidator.validate(userIdIn);
         } catch (InvalidInputException e) {
-            throw new InvalidUserException("Bad input: " + e.getMessage(), e);
+            throw new InvalidUserException("userId not valid: " + e.getMessage(), e);
         }
     }
 
