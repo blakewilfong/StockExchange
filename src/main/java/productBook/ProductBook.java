@@ -1,8 +1,10 @@
 package productBook;
 import common.BookSide;
 import common.ProductValidator;
+
 import exceptions.InvalidInputException;
 import exceptions.InvalidProductBookException;
+
 import price.Price;
 import quote.Quote;
 import tradable.Tradable;
@@ -12,13 +14,17 @@ import tradable.TradableDTO;
 public class ProductBook {
 
     private String product;
-    private final ProductValidator productValidator;
+
     private final ProductBookSide buySide, sellSide;
 
-    public ProductBook(String product) throws InvalidInputException, InvalidProductBookException {
+    public ProductBook(String product) throws InvalidProductBookException {
 
-        productValidator = new ProductValidator(product);
-        setProduct(product);
+        try {
+            this.product = ProductValidator.validate(product);
+        } catch (InvalidInputException e) {
+            throw new InvalidProductBookException("Bad input: " + e.getMessage(), e);
+        }
+
         buySide = new ProductBookSide(BookSide.BUY);
         sellSide = new ProductBookSide(BookSide.SELL);
     }
@@ -55,8 +61,6 @@ public class ProductBook {
     }
 
     public TradableDTO cancel(BookSide side, String orderId) throws InvalidProductBookException{
-
-
 
         ProductBookSide bookSide = (side == BookSide.BUY) ? buySide : sellSide;
         TradableDTO cancelledOrder = bookSide.cancel(orderId);
@@ -127,18 +131,9 @@ public class ProductBook {
         return sb.toString();
     }
 
-
-
     public String getProduct() {
         return this.product;
     }
 
-    private void setProduct(String productIn) throws InvalidProductBookException {
-        try {
-            this.productValidator.setProduct(productIn);
-        } catch (InvalidInputException e) {
-            throw new InvalidProductBookException(e.getMessage());
-        }
-        this.product = this.productValidator.getProduct();
-    }
+
 }

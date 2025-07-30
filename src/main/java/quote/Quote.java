@@ -1,20 +1,17 @@
 package quote;
+
 import common.BookSide;
 import common.ProductValidator;
 import common.UserValidator;
-
 import exceptions.InvalidInputException;
-import exceptions.InvalidQuoteException;
 import exceptions.InvalidTradableException;
 import price.Price;
 import tradable.QuoteSide;
 
 public class Quote {
 
-    private final ProductValidator productValidator;
-    private final UserValidator userValidator;
 
-    private String user, product;
+    private final String user, product;
     private QuoteSide buySide, sellSide;
 
 
@@ -23,26 +20,21 @@ public class Quote {
                  int buyVolume,
                  Price sellPrice,
                  int sellVolume,
-                 String userName) throws InvalidQuoteException, InvalidInputException, InvalidTradableException {
+                 String userName) throws InvalidInputException, InvalidTradableException {
 
+        try {
+            this.user = UserValidator.validate(userName);
+            this.product = ProductValidator.validate(symbol);
+        } catch (InvalidInputException e) {
+            throw new InvalidTradableException("Invalid input: " + e.getMessage(), e);
+        }
 
-        this.productValidator = new ProductValidator(symbol);
-        this.userValidator = new UserValidator(userName);
-        setUser(userName);
-        setProduct(symbol);
         setBuySide(userName, symbol, buyPrice, buyVolume);
         setSellSide(userName, symbol, sellPrice, sellVolume);
 
     }
 
-    private void setUser(String userIn) throws InvalidQuoteException {
-        try {
-            this.userValidator.setUser(userIn);
-        } catch (InvalidInputException e) {
-            throw new InvalidQuoteException(e.getMessage());
-        }
-        this.user = this.userValidator.getUser();
-    }
+
 
     public String getUser(){
         return this.user;
@@ -60,15 +52,6 @@ public class Quote {
 
     public QuoteSide getQuoteSide(BookSide sideIn){
         return (sideIn == BookSide.BUY) ? buySide : sellSide;
-    }
-
-    private void setProduct(String productIn) throws InvalidQuoteException{
-        try {
-            this.productValidator.setProduct(productIn);
-        } catch (InvalidInputException e) {
-            throw new InvalidQuoteException(e.getMessage());
-        }
-        this.product = this.productValidator.getProduct();
     }
 
     public String getProduct(){

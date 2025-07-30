@@ -9,10 +9,6 @@ import price.Price;
 
 public class TradableImpl implements Tradable{
 
-
-    private final ProductValidator productValidator;
-    private final UserValidator userValidator;
-
     private String user, product, id;
     private Price price;
     private int originalVolume, remainingVolume;
@@ -26,13 +22,14 @@ public class TradableImpl implements Tradable{
             Price priceIn,
             int originalVolumeIn,
             BookSide sideIn
-    ) throws InvalidInputException, InvalidTradableException {
+    ) throws InvalidTradableException {
 
-        this.productValidator = new ProductValidator(productIn);
-        this.userValidator = new UserValidator(userIn);
-
-        setUser(userIn);
-        setProduct(productIn);
+        try {
+            this.user = UserValidator.validate(userIn);
+            this.product = ProductValidator.validate(productIn);
+        } catch (InvalidInputException e) {
+            throw new InvalidTradableException("Invalid input: " + e.getMessage(), e);
+        }
         setPrice(priceIn);
         setOriginalVolume(originalVolumeIn);
         setRemainingVolume(originalVolumeIn);
@@ -108,28 +105,11 @@ public class TradableImpl implements Tradable{
         return this.user;
     }
 
-    private void setUser(String userIn) throws InvalidTradableException{
-        try {
-            this.userValidator.setUser(userIn);
-        } catch (InvalidInputException e) {
-            throw new InvalidTradableException(e.getMessage());
-        }
-        this.user = this.userValidator.getUser();
-    }
-
     @Override
     public String getProduct() {
         return this.product;
     }
 
-    private void setProduct(String productIn) throws InvalidTradableException{
-        try {
-            this.productValidator.setProduct(productIn);
-        } catch (InvalidInputException e) {
-            throw new InvalidTradableException(e.getMessage());
-        }
-        this.product = this.productValidator.getProduct();
-    }
 
     @Override
     public int getOriginalVolume() {

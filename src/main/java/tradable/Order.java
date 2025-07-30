@@ -1,7 +1,6 @@
 package tradable;
 
 import common.BookSide;
-import exceptions.InvalidInputException;
 import exceptions.InvalidTradableException;
 import price.Price;
 
@@ -16,7 +15,7 @@ public class Order implements Tradable {
             Price priceIn,
             int originalVolumeIn,
             BookSide sideIn
-    ) throws InvalidInputException, InvalidTradableException {
+    ) throws InvalidTradableException {
         tradable = new TradableImpl(
                 userIn,
                 productIn,
