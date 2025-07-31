@@ -93,9 +93,9 @@ public class Order implements Tradable {
 
     @Override
     public String toString(){
-        return getUser() + " " + getSide() + " order: " + getProduct() + " at " + getPrice() + ", Orig Vol: " +
-                getOriginalVolume() + ", Rem Vol: " + getRemainingVolume() + ", Fill Vol: " + getFilledVolume() +
-                ", CXL Vol: " + getCancelledVolume() + ", ID: " + getId();
+        return getUser() + " " + getSide() + " side order for " + getProduct() + ": Price: " + getPrice() + ", Orig Vol:  " +
+                getOriginalVolume() + ", Rem Vol:  " + getRemainingVolume() + ", Fill Vol:  " + getFilledVolume() +
+                ", Cxl'd Vol:   " + getCancelledVolume() + ", ID: " + getId();
     }
 }
 

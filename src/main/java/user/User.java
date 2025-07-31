@@ -37,7 +37,7 @@ public class User {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("User Id: ").append(userId).append("\n");
+        sb.append("  User Id: ").append(userId).append("\n");
         for (String s : tradables.keySet()) {
             TradableDTO t = tradables.get(s);
             sb.append("\tProduct: ").append(t.product());

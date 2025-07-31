@@ -45,7 +45,7 @@ public class ProductBookSide {
             for (Tradable t : bookEntries.get(key)) {
                 if (t.getId().equals(tradableId)) {
                     tradable = t;
-                    System.out.println("**CANCEL: " + tradable);
+                    //System.out.println("**CANCEL: " + tradable);
                     bookEntries.get(key).remove(t);
                     tradable.setCancelledVolume(tradable.getCancelledVolume() + tradable.getRemainingVolume());
                     tradable.setRemainingVolume(0);
@@ -114,7 +114,7 @@ public class ProductBookSide {
                 int rv = t.getRemainingVolume();
                 t.setFilledVolume(t.getOriginalVolume());
                 t.setRemainingVolume(0);
-                System.out.println("\t\tFULL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
+                System.out.println("\tFULL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
                 UserManager.getInstance().updateTradable(t.getUser(),t.makeTradableDTO());
             }
             bookEntries.remove(topOfBookPrice());
@@ -129,7 +129,7 @@ public class ProductBookSide {
             toTrade = Math.min(toTrade, remainder);
             t.setFilledVolume(t.getFilledVolume() + toTrade);
             t.setRemainingVolume(t.getRemainingVolume() - toTrade);
-            System.out.println("\t\tPARTIAL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
+            System.out.println("\tPARTIAL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
             remainder -= toTrade;
             UserManager.getInstance().updateTradable(t.getUser(),t.makeTradableDTO());
         }

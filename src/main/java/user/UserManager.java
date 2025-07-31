@@ -49,7 +49,8 @@ public final class UserManager {
         StringBuilder sb = new StringBuilder();
         for(User u: userMap.values()){
             sb.append(u.toString());
-            sb.append("\t\t...\n");
+            //sb.append("\t\t...\n");
+            sb.append("\n");
         }
         return sb.toString();
     }
