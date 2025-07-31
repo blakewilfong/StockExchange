@@ -37,7 +37,7 @@ public final class ProductManager {
     }
 
     public ProductBook getProductBook(String symbol) throws DataValidationException {
-        if (!productMap.containsKey(symbol)) throw new DataValidationException("product symbol invalid");
+        if (!productMap.containsKey(symbol)) throw new DataValidationException("Product does not exist");
         return productMap.get(symbol);
     }
 
@@ -85,9 +85,27 @@ public final class ProductManager {
         return dto;
     }
 
-    //TODO
-    public TradableDTO[] cancelQuote(String symbol, String user){
-        return null;
+
+    public TradableDTO[] cancelQuote(String symbol, String user) throws DataValidationException {
+        if (symbol == null) throw new DataValidationException("Symbol can not be null");
+        if (user == null) throw new DataValidationException("User can not be null");
+        ProductBook p = getProductBook(symbol);
+        TradableDTO[] newDTOArray = new TradableDTO[2];
+        try {
+            newDTOArray = p.removeQuotesForUser(user);
+        } catch (InvalidProductBookException e) {
+            System.out.println("Failed to remove quote");
+        }
+        return newDTOArray;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for(ProductBook pb: productMap.values()){
+            sb.append(pb.toString());
+        }
+        return sb.toString();
     }
 
 
