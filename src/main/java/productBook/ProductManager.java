@@ -56,7 +56,7 @@ public final class ProductManager {
         String symbol = o.getProduct();
         ProductBook p = getProductBook(symbol);
         TradableDTO newDTO = p.add(o);
-        UserManager.updateTradable(o.getUser(), o.makeTradableDTO());
+        UserManager.getInstance().updateTradable(o.getUser(), o.makeTradableDTO());
         return newDTO;
     }
 

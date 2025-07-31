@@ -2,6 +2,7 @@ package productBook;
 import common.BookSide;
 import common.ProductValidator;
 
+import exceptions.DataValidationException;
 import exceptions.InvalidInputException;
 import exceptions.InvalidProductBookException;
 
@@ -29,7 +30,7 @@ public class ProductBook {
         sellSide = new ProductBookSide(BookSide.SELL);
     }
 
-    public TradableDTO add(Tradable t) throws InvalidProductBookException{
+    public TradableDTO add(Tradable t) throws InvalidProductBookException, DataValidationException {
 
         if (t == null) throw new InvalidProductBookException("Tradable can not be null.");
         System.out.println("**ADD: " + t);
@@ -45,7 +46,7 @@ public class ProductBook {
         return dto;
     }
 
-    public TradableDTO[] add(Quote qte) throws InvalidProductBookException{
+    public TradableDTO[] add(Quote qte) throws InvalidProductBookException, DataValidationException {
 
         if (qte == null) throw new InvalidProductBookException("Quote can not be null");
         removeQuotesForUser(qte.getUser());
@@ -60,7 +61,7 @@ public class ProductBook {
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
-    public TradableDTO cancel(BookSide side, String orderId) throws InvalidProductBookException{
+    public TradableDTO cancel(BookSide side, String orderId) throws InvalidProductBookException, DataValidationException {
 
         ProductBookSide bookSide = (side == BookSide.BUY) ? buySide : sellSide;
         TradableDTO cancelledOrder = bookSide.cancel(orderId);
@@ -69,14 +70,14 @@ public class ProductBook {
         return cancelledOrder;
     }
 
-    public TradableDTO[] removeQuotesForUser(String userName) throws InvalidProductBookException{
+    public TradableDTO[] removeQuotesForUser(String userName) throws InvalidProductBookException, DataValidationException {
         if (userName == null) throw new InvalidProductBookException("userName cannot be null.");
         TradableDTO buyDTO = buySide.removeQuotesForUser(userName);
         TradableDTO sellDTO = sellSide.removeQuotesForUser(userName);
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
-    public void tryTrade(){
+    public void tryTrade() throws DataValidationException {
         Price topBuy = buySide.topOfBookPrice();
         Price topSell = sellSide.topOfBookPrice();
         if (topBuy == null || topSell == null) return;

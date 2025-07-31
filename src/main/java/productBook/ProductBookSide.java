@@ -1,9 +1,13 @@
 package productBook;
 import common.BookSide;
+import exceptions.DataValidationException;
 import exceptions.InvalidProductBookException;
 import price.Price;
 import tradable.Tradable;
 import tradable.TradableDTO;
+import user.User;
+import user.UserManager;
+
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeMap;
@@ -21,7 +25,7 @@ public class ProductBookSide {
         bookEntries = new TreeMap<>();
     }
 
-    public TradableDTO add(Tradable o) {
+    public TradableDTO add(Tradable o) throws DataValidationException {
 
         if (!bookEntries.containsKey(o.getPrice())) {
             bookEntries.put(o.getPrice(), new ArrayList<Tradable>());
@@ -30,10 +34,11 @@ public class ProductBookSide {
         else {
             bookEntries.get(o.getPrice()).add(o);
         }
+        UserManager.getInstance().updateTradable(o.getUser(),o.makeTradableDTO());
         return new TradableDTO(o);
     }
 
-    public TradableDTO cancel(String tradableId) {
+    public TradableDTO cancel(String tradableId) throws DataValidationException {
 
         Tradable tradable;
         for (Price key : bookEntries.keySet()) {
@@ -47,6 +52,7 @@ public class ProductBookSide {
                     if (bookEntries.get(key).isEmpty()) {
                         bookEntries.remove(key);
                     }
+                    UserManager.getInstance().updateTradable(t.getUser(),t.makeTradableDTO());
                     return new TradableDTO(tradable);
 
                 }
@@ -56,17 +62,14 @@ public class ProductBookSide {
     }
 
 
-    public TradableDTO removeQuotesForUser(String userName) {
+    public TradableDTO removeQuotesForUser(String userName) throws DataValidationException {
 
         TradableDTO dto;
         for (Price key : bookEntries.keySet()) {
             for (Tradable t : bookEntries.get(key)) {
                 if (t.getUser().equals(userName)) {
                     dto = cancel(t.getId());
-//                    if (bookEntries.get(key).isEmpty()) {
-//                        bookEntries.remove(key);
-//                        return dto;
-//                    }
+                    UserManager.getInstance().updateTradable(t.getUser(),t.makeTradableDTO());
                     return dto;
                 }
             }
@@ -97,7 +100,7 @@ public class ProductBookSide {
         return totalVolume;
     }
 
-    public void tradeOut(Price price, int volToTrade) {
+    public void tradeOut(Price price, int volToTrade) throws DataValidationException {
 
         Price topPrice = topOfBookPrice();
         if (topPrice == null || topPrice.getPrice() > price.getPrice()) return;
@@ -111,9 +114,8 @@ public class ProductBookSide {
                 int rv = t.getRemainingVolume();
                 t.setFilledVolume(t.getOriginalVolume());
                 t.setRemainingVolume(0);
-
                 System.out.println("\t\tFULL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
-                //atPrice.remove(t);
+                UserManager.getInstance().updateTradable(t.getUser(),t.makeTradableDTO());
             }
             bookEntries.remove(topOfBookPrice());
             return;
@@ -129,6 +131,7 @@ public class ProductBookSide {
             t.setRemainingVolume(t.getRemainingVolume() - toTrade);
             System.out.println("\t\tPARTIAL FILL: (" + side + " " + t.getFilledVolume() + ") " + t);
             remainder -= toTrade;
+            UserManager.getInstance().updateTradable(t.getUser(),t.makeTradableDTO());
         }
     }
 

@@ -35,7 +35,7 @@ public final class UserManager {
         }
     }
 
-    public static void updateTradable(String userId, TradableDTO o) throws DataValidationException{
+    public void updateTradable(String userId, TradableDTO o) throws DataValidationException{
         if (userId == null) throw new DataValidationException("userId can not be null");
         if (o == null) throw new DataValidationException("TradableDTO can not be null");
         if (!userMap.containsKey(userId)) throw new DataValidationException("User does not exist");
