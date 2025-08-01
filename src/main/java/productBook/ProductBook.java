@@ -31,49 +31,70 @@ public class ProductBook {
         sellSide = new ProductBookSide(BookSide.SELL);
     }
 
-    public TradableDTO add(Tradable t) throws InvalidProductBookException, DataValidationException {
+    public TradableDTO add(Tradable t) throws InvalidProductBookException {
 
         if (t == null) throw new InvalidProductBookException("Tradable can not be null.");
         //System.out.println("**ADD: " + t);
 
         TradableDTO dto;
         BookSide side = t.getSide();
-
-        if (side == BookSide.BUY){
-            dto = buySide.add(t);
+        try {
+            if (side == BookSide.BUY){
+                dto = buySide.add(t);
+            }
+            else dto = sellSide.add(t);
+            tryTrade();}
+        catch (DataValidationException e) {
+            throw new InvalidProductBookException("Failed to add tradable to ProductBook: " + e.getMessage(), e);
         }
-        else dto = sellSide.add(t);
-        tryTrade();
         return dto;
     }
 
-    public TradableDTO[] add(Quote qte) throws InvalidProductBookException, DataValidationException {
+    public TradableDTO[] add(Quote qte) throws InvalidProductBookException {
 
         if (qte == null) throw new InvalidProductBookException("Quote can not be null");
-        removeQuotesForUser(qte.getUser());
 
+        removeQuotesForUser(qte.getUser());
         //System.out.println("**ADD: " + qte.getQuoteSide(BookSide.BUY));
         //System.out.println("**ADD: " + qte.getQuoteSide(BookSide.SELL));
+        TradableDTO buyDTO;
+        TradableDTO sellDTO;
 
-        TradableDTO buyDTO  = buySide.add(qte.getQuoteSide(BookSide.BUY));
-        TradableDTO sellDTO = sellSide.add(qte.getQuoteSide(BookSide.SELL));
-        tryTrade();
+        try {
+            buyDTO = buySide.add(qte.getQuoteSide(BookSide.BUY));
+            sellDTO = sellSide.add(qte.getQuoteSide(BookSide.SELL));
+            tryTrade();
+        } catch (DataValidationException e) {
+            throw new InvalidProductBookException("Failed to add tradable to ProductBook: " + e.getMessage(), e);
+        }
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
-    public TradableDTO cancel(BookSide side, String orderId) throws InvalidProductBookException, DataValidationException {
+    public TradableDTO cancel(BookSide side, String orderId) throws InvalidProductBookException {
 
         ProductBookSide bookSide = (side == BookSide.BUY) ? buySide : sellSide;
-        TradableDTO cancelledOrder = bookSide.cancel(orderId);
+        TradableDTO cancelledOrder;
+        try{
+            cancelledOrder = bookSide.cancel(orderId);
+        } catch (DataValidationException e) {
+            throw new InvalidProductBookException("Failed to cancel: " + e.getMessage(), e);
+        }
         if (cancelledOrder == null) throw new InvalidProductBookException("Cancelled order not found.");
 
         return cancelledOrder;
     }
 
-    public TradableDTO[] removeQuotesForUser(String userName) throws InvalidProductBookException, DataValidationException {
+    public TradableDTO[] removeQuotesForUser(String userName) throws InvalidProductBookException {
         if (userName == null) throw new InvalidProductBookException("userName cannot be null.");
-        TradableDTO buyDTO = buySide.removeQuotesForUser(userName);
-        TradableDTO sellDTO = sellSide.removeQuotesForUser(userName);
+
+        TradableDTO buyDTO;
+        TradableDTO sellDTO;
+        try {
+            buyDTO = buySide.removeQuotesForUser(userName);
+            sellDTO = sellSide.removeQuotesForUser(userName);
+        } catch (DataValidationException e) {
+            throw new InvalidProductBookException("Failed to removeQuotesForUser: " + e.getMessage(), e);
+        }
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
@@ -101,12 +122,15 @@ public class ProductBook {
         int buyVolume = 0;
         int sellVolume = 0;
 
-        if (buySide.topOfBookPrice() != null){
-            buyPrice = buySide.topOfBookPrice().getPrice();
+        Price buyTop = buySide.topOfBookPrice();
+        Price sellTop = sellSide.topOfBookPrice();
+
+        if (buyTop != null){
+            buyPrice = buyTop.getPrice();
             buyVolume = buySide.topOfBookVolume();
         }
-        if (sellSide.topOfBookPrice() != null){
-            sellPrice = sellSide.topOfBookPrice().getPrice();
+        if (sellTop != null){
+            sellPrice = sellTop.getPrice();
             sellVolume = sellSide.topOfBookVolume();
         }
 
