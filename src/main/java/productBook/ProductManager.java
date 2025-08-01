@@ -15,7 +15,6 @@ public final class ProductManager {
 
     private static ProductManager instance;
     private final HashMap<String, ProductBook> productMap = new HashMap<>();
-
     public static ProductManager getInstance(){
         if (instance == null)
             instance = new ProductManager();
@@ -27,6 +26,7 @@ public final class ProductManager {
     }
 
     public void addProduct(String symbol) throws DataValidationException {
+
         ProductBook newProductBook;
         try {
             newProductBook = new ProductBook(symbol);
@@ -42,6 +42,7 @@ public final class ProductManager {
     }
 
     public String getRandomProduct() throws DataValidationException {
+
         if (productMap.isEmpty()) throw new DataValidationException("ProductMap is empty");
         int numProducts = productMap.size();
         Random rand = new Random();
@@ -51,20 +52,29 @@ public final class ProductManager {
 
     }
 
-    public TradableDTO addTradable(Tradable o) throws DataValidationException, InvalidProductBookException {
+    public TradableDTO addTradable(Tradable o) throws DataValidationException {
         if (o == null) throw new DataValidationException("Tradable can not be null");
         String symbol = o.getProduct();
         ProductBook p = getProductBook(symbol);
-        TradableDTO newDTO = p.add(o);
+        TradableDTO newDTO;
+        try {
+            newDTO = p.add(o);
+        } catch (InvalidProductBookException e) {
+            throw new DataValidationException("Failed to add tradable: " + e.getMessage(), e);
+        }
         UserManager.getInstance().updateTradable(o.getUser(), o.makeTradableDTO());
         return newDTO;
     }
 
-    public TradableDTO[] addQuote(Quote q) throws DataValidationException, InvalidProductBookException {
+    public TradableDTO[] addQuote(Quote q) throws DataValidationException {
         if (q == null) throw new DataValidationException("Quote can not be null");
         String user = q.getUser();
         ProductBook p = getProductBook(user);
-        p.removeQuotesForUser(user);
+        try {
+            p.removeQuotesForUser(user);
+        } catch (InvalidProductBookException e) {
+            throw new DataValidationException("Failed to add quote: " + e.getMessage(), e);
+        }
 
         TradableDTO buyDTO = addTradable(q.getQuoteSide(BookSide.BUY));
         TradableDTO sellDTO = addTradable(q.getQuoteSide(BookSide.SELL));
@@ -87,6 +97,7 @@ public final class ProductManager {
 
 
     public TradableDTO[] cancelQuote(String symbol, String user) throws DataValidationException {
+
         if (symbol == null) throw new DataValidationException("Symbol can not be null");
         if (user == null) throw new DataValidationException("User can not be null");
         ProductBook p = getProductBook(symbol);
@@ -101,6 +112,7 @@ public final class ProductManager {
 
     @Override
     public String toString(){
+
         StringBuilder sb = new StringBuilder();
         for(ProductBook pb: productMap.values()){
             sb.append(pb.toString());
