@@ -20,7 +20,7 @@ public class Quote {
                  int buyVolume,
                  Price sellPrice,
                  int sellVolume,
-                 String userName) throws InvalidInputException, InvalidTradableException {
+                 String userName) throws InvalidTradableException {
 
         try {
             this.user = UserValidator.validate(userName);
@@ -40,12 +40,12 @@ public class Quote {
         return this.user;
     }
 
-    private void setBuySide(String userName, String symbol, Price price, int volume) throws InvalidInputException, InvalidTradableException {
+    private void setBuySide(String userName, String symbol, Price price, int volume) throws InvalidTradableException {
 
         this.buySide = new QuoteSide(userName, symbol, price, volume, BookSide.BUY);
     }
 
-    private void setSellSide(String userName, String symbol, Price price, int volume) throws InvalidInputException, InvalidTradableException {
+    private void setSellSide(String userName, String symbol, Price price, int volume) throws InvalidTradableException {
 
         this.sellSide = new QuoteSide(userName, symbol, price, volume, BookSide.SELL);
     }

@@ -1,6 +1,6 @@
 package price;
-import exceptions.InvalidPriceException;
 
+import exceptions.InvalidPriceException;
 import java.util.HashMap;
 
 public abstract class PriceFactory {

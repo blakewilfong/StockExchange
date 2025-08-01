@@ -1,11 +1,11 @@
 package productBook;
+
 import common.BookSide;
 import exceptions.DataValidationException;
 import exceptions.InvalidProductBookException;
 import price.Price;
 import tradable.Tradable;
 import tradable.TradableDTO;
-import user.User;
 import user.UserManager;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class ProductBookSide {
     public TradableDTO add(Tradable o) throws DataValidationException {
 
         if (!bookEntries.containsKey(o.getPrice())) {
-            bookEntries.put(o.getPrice(), new ArrayList<Tradable>());
+            bookEntries.put(o.getPrice(), new ArrayList<>());
             bookEntries.get(o.getPrice()).add(o);
         }
         else {
@@ -111,6 +111,7 @@ public class ProductBookSide {
 
         if (volToTrade >= totalVolAtPrice){
             for(Tradable t: atPrice){
+                // not sure what rv is for
                 int rv = t.getRemainingVolume();
                 t.setFilledVolume(t.getOriginalVolume());
                 t.setRemainingVolume(0);
@@ -120,7 +121,6 @@ public class ProductBookSide {
             bookEntries.remove(topOfBookPrice());
             return;
         }
-
         int remainder = volToTrade;
 
         for (Tradable t: atPrice){

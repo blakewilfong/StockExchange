@@ -27,6 +27,7 @@ public class Order implements Tradable {
 
     @Override
     public String getId() {
+
         return tradable.getId();
     }
 
@@ -37,6 +38,7 @@ public class Order implements Tradable {
 
     @Override
     public int getRemainingVolume() {
+
         return tradable.getRemainingVolume();
     }
 
@@ -47,52 +49,62 @@ public class Order implements Tradable {
 
     @Override
     public int getCancelledVolume() {
+
         return tradable.getCancelledVolume();
     }
 
     @Override
     public TradableDTO makeTradableDTO() {
+
         return tradable.makeTradableDTO();
     }
 
     @Override
     public Price getPrice() {
+
         return this.tradable.getPrice();
     }
 
     @Override
     public void setFilledVolume(int newVol) {
+
         this.tradable.setFilledVolume(newVol);
     }
 
     @Override
     public int getFilledVolume() {
+
         return this.tradable.getFilledVolume();
     }
 
     @Override
     public BookSide getSide() {
+
         return this.tradable.getSide();
     }
 
     @Override
     public String getUser() {
+
         return this.tradable.getUser();
     }
 
     @Override
     public String getProduct() {
+
         return this.tradable.getProduct();
     }
 
     @Override
     public int getOriginalVolume() {
+
         return this.tradable.getOriginalVolume();
     }
 
 
     @Override
     public String toString(){
+
         return getUser() + " " + getSide() + " side order for " + getProduct() + ": Price: " + getPrice() + ", Orig Vol:  " +
                 getOriginalVolume() + ", Rem Vol:  " + getRemainingVolume() + ", Fill Vol:  " + getFilledVolume() +
                 ", Cxl'd Vol:   " + getCancelledVolume() + ", ID: " + getId();

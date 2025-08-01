@@ -1,4 +1,5 @@
 package productBook;
+
 import common.BookSide;
 import common.ProductValidator;
 
@@ -14,7 +15,7 @@ import tradable.TradableDTO;
 
 public class ProductBook {
 
-    private String product;
+    private final String product;
 
     private final ProductBookSide buySide, sellSide;
 
@@ -50,7 +51,6 @@ public class ProductBook {
 
         if (qte == null) throw new InvalidProductBookException("Quote can not be null");
         removeQuotesForUser(qte.getUser());
-
 
         //System.out.println("**ADD: " + qte.getQuoteSide(BookSide.BUY));
         //System.out.println("**ADD: " + qte.getQuoteSide(BookSide.SELL));
@@ -94,7 +94,7 @@ public class ProductBook {
         }
 
     }
-    //  Top of BUY book: Top of BUY book: $0.00 x 0
+
     public String getTopOfBookString(BookSide side){
         int buyPrice = 0;
         int sellPrice = 0;
@@ -122,14 +122,11 @@ public class ProductBook {
     @Override
     public String toString(){
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("--------------------------------------------\n");
-        sb.append("Product Book: ").append(getProduct()).append("\n");
-        sb.append(buySide.toString());
-        sb.append(sellSide.toString());
-        sb.append("--------------------------------------------");
-
-        return sb.toString();
+        return "--------------------------------------------\n" +
+                "Product Book: " + getProduct() + "\n" +
+                buySide.toString() +
+                sellSide.toString() +
+                "--------------------------------------------";
     }
 
     public String getProduct() {
