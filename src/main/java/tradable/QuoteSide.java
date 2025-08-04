@@ -15,13 +15,8 @@ public class QuoteSide implements Tradable{
             int originalVolumeIn,
             BookSide sideIn
     ) throws InvalidTradableException {
-        this.tradable = new TradableImpl(
-                userIn,
-                productIn,
-                priceIn,
-                originalVolumeIn,
-                sideIn
-        );
+        this.tradable = TradableFactory.create(userIn, productIn, priceIn, originalVolumeIn, sideIn);
+
     }
 
     @Override

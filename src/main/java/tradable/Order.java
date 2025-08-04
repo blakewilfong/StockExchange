@@ -16,13 +16,8 @@ public class Order implements Tradable {
             int originalVolumeIn,
             BookSide sideIn
     ) throws InvalidTradableException {
-        tradable = new TradableImpl(
-                userIn,
-                productIn,
-                priceIn,
-                originalVolumeIn,
-                sideIn
-        );
+        this.tradable = TradableFactory.create(userIn, productIn, priceIn, originalVolumeIn, sideIn);
+
     }
 
     @Override
