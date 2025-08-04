@@ -15,8 +15,8 @@ import java.util.TreeMap;
 
 public class ProductBookSide {
 
-    final TreeMap<Price, ArrayList<Tradable>> bookEntries;
-    BookSide side;
+    private final TreeMap<Price, ArrayList<Tradable>> bookEntries;
+    private final BookSide side;
 
     public ProductBookSide(BookSide sideIn) throws InvalidProductBookException {
 
