@@ -1,4 +1,15 @@
+package org.blakewilfong;
 
+import price.Price;
+import price.PriceFactory;
+import productBook.ProductManager;
+import quote.Quote;
+import tradable.Order;
+import tradable.TradableDTO;
+import user.UserManager;
+
+import static common.BookSide.BUY;
+import static common.BookSide.SELL;
 
 public class Main {
     
