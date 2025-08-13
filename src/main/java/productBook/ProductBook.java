@@ -7,6 +7,7 @@ import exceptions.DataValidationException;
 import exceptions.InvalidInputException;
 import exceptions.InvalidProductBookException;
 
+import market.CurrentMarketTracker;
 import price.Price;
 import quote.Quote;
 import tradable.Tradable;
@@ -43,7 +44,9 @@ public class ProductBook {
                 dto = buySide.add(t);
             }
             else dto = sellSide.add(t);
-            tryTrade();}
+            tryTrade();
+            updateMarket();
+        }
         catch (DataValidationException e) {
             throw new InvalidProductBookException("Failed to add tradable to ProductBook: " + e.getMessage(), e);
         }
@@ -76,6 +79,7 @@ public class ProductBook {
         TradableDTO cancelledOrder;
         try{
             cancelledOrder = bookSide.cancel(orderId);
+            updateMarket();
         } catch (DataValidationException e) {
             throw new InvalidProductBookException("Failed to cancel: " + e.getMessage(), e);
         }
@@ -95,6 +99,7 @@ public class ProductBook {
         } catch (DataValidationException e) {
             throw new InvalidProductBookException("Failed to removeQuotesForUser: " + e.getMessage(), e);
         }
+        updateMarket();
         return new TradableDTO[] {buyDTO, sellDTO};
     }
 
@@ -155,6 +160,11 @@ public class ProductBook {
 
     public String getProduct() {
         return this.product;
+    }
+
+    private void updateMarket(){
+        CurrentMarketTracker CMT = CurrentMarketTracker.getInstance();
+        CMT.updateMarket(getProduct(), buySide.topOfBookPrice(), buySide.topOfBookVolume(), sellSide.topOfBookPrice(), sellSide.topOfBookVolume());
     }
 
 
