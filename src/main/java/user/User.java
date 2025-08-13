@@ -3,15 +3,18 @@ package user;
 import common.UserValidator;
 import exceptions.InvalidInputException;
 import exceptions.InvalidUserException;
+import market.CurrentMarketObserver;
+import market.CurrentMarketSide;
 import tradable.TradableDTO;
 
 import java.util.HashMap;
 
 
-public class User {
+public class User implements CurrentMarketObserver {
 
     private String userId;
     private final HashMap<String, TradableDTO> tradables = new HashMap<>();
+    private HashMap<String, CurrentMarketSide[]> currentMarkets = new HashMap<>();
 
     public User(String userIdIn) throws InvalidUserException {
         setUserId(userIdIn);
@@ -54,4 +57,13 @@ public class User {
         return sb.toString();
     }
 
+    @Override
+    public void updateCurrentMarket(String symbol, CurrentMarketSide buySide, CurrentMarketSide sellSide) {
+        CurrentMarketSide[] currentMarketSides = {buySide, sellSide};
+        currentMarkets.put(symbol, currentMarketSides);
+    }
+
+    public String getCurrentMarkets(){
+
+    }
 }
