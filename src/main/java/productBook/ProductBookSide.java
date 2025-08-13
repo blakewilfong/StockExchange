@@ -84,7 +84,7 @@ public class ProductBookSide {
     }
 
     public int topOfBookVolume() {
-
+        if (bookEntries.isEmpty()) return 0;
         int totalVolume = 0;
 
         if (side == BookSide.BUY) {

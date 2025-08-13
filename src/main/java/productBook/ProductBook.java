@@ -164,7 +164,8 @@ public class ProductBook {
 
     private void updateMarket(){
         CurrentMarketTracker CMT = CurrentMarketTracker.getInstance();
-        CMT.updateMarket(getProduct(), buySide.topOfBookPrice(), buySide.topOfBookVolume(), sellSide.topOfBookPrice(), sellSide.topOfBookVolume());
+        CMT.updateMarket(this.product, buySide.topOfBookPrice(), buySide.topOfBookVolume(), sellSide.topOfBookPrice(), sellSide.topOfBookVolume());
+
     }
 
 

@@ -7,7 +7,7 @@ public class CurrentMarketPublisher {
 
     private static CurrentMarketPublisher instance;
 
-    private static HashMap<String, ArrayList<CurrentMarketObserver>> filters;
+    private static final HashMap<String, ArrayList<CurrentMarketObserver>> filters = new HashMap<>();
 
     public static CurrentMarketPublisher getInstance(){
         if(instance == null)

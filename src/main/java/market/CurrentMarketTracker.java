@@ -5,6 +5,7 @@ import price.Price;
 public class CurrentMarketTracker {
 
     private static CurrentMarketTracker instance;
+    private CurrentMarketTracker(){}
 
     public static CurrentMarketTracker getInstance(){
         if(instance == null)
@@ -26,7 +27,7 @@ public class CurrentMarketTracker {
 
         String s = "*********** Current Market ***********\n" +
                 "* " + symbol + "   " + buyPrice + "x" + buyVolume +
-                " - " + sellPrice + "x" + sellVolume + " [" + width + "]\n" +
+                " - " + sellPrice + "x" + sellVolume + " [$" + width + "]\n" +
                 "**************************************\n";
         System.out.println(s);
         CurrentMarketPublisher.acceptCurrentMarket(symbol, currentMarketBuySide, currentMarketSellSide);
