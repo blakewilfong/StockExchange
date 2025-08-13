@@ -64,6 +64,14 @@ public class User implements CurrentMarketObserver {
     }
 
     public String getCurrentMarkets(){
-
+        String s;
+        StringBuilder sb = new StringBuilder();
+        for (String product: currentMarkets.keySet()){
+            CurrentMarketSide buySide = currentMarkets.get(product)[0];
+            CurrentMarketSide sellSide = currentMarkets.get(product)[1];
+            s = product + "     " + buySide.toString() + " - " + sellSide.toString() + "\n";
+            sb.append(s);
+        }
+        return sb.toString();
     }
 }

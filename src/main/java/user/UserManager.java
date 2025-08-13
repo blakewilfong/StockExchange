@@ -55,6 +55,13 @@ public final class UserManager {
         return sb.toString();
     }
 
+    public User getUser(String userId) throws DataValidationException{
+        if (userId == null) throw new DataValidationException("userId can not be null");
+        if (!userMap.containsKey(userId)) throw new DataValidationException("userId not found");
+        return userMap.get(userId);
+
+    }
+
 
 
 }
